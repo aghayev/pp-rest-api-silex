@@ -1,5 +1,40 @@
-PleasePay API
+PleasePay REST API Demo Version 1.0 
 =============
+
+Services 
+--------
+
+#### Brief description of available services. For usage please see examples under tests/*
+- POST /1.0/auth 
+- POST /1.0/auth/logout 
+- POST /1.0/auth/reset 
+
+- GET  /1.0/buyer [Header: Client-Security-Token]
+- GET  /1.0/buyer/{id}
+POST /1.0/buyer
+
+GET  /1.0/country
+GET  /1.0/currency
+
+GET  /1.0/dashboard 
+
+GET  /1.0/seller/welcome/{to}
+POST /1.0/seller
+
+GET  /1.0/invoice
+GET  /1.0/invoice/{id}
+POST /1.0/invoice
+
+GET  /1.0/invoice_print
+POST /1.0/invoice_product
+
+POST /1.0/logo
+
+GET  /1.0/product/{name}
+
+POST /1.0/update/seller
+GET  /1.0/vat
+
 
 Installation
 ------------
