@@ -2,16 +2,16 @@
 
 require_once __DIR__.'/bootstrap.php';
 
-// init Silex app
-//$app = new Silex\Application();
+// Init Silex app
 $app = new Pleasepay\Application();
 
-// Configuration
+// Init Configuration
 require_once __DIR__.'/config.php';
 
+// Init log connector
 $app->register(new Silex\Provider\MonologServiceProvider(), array());
 
-//configure database connection
+// Init Database connector for Model component
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'driver' => 'pdo_mysql',
@@ -23,6 +23,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     ),
 ));
 
+// Init View component
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/../templates',
 ));
@@ -32,8 +33,10 @@ $app['twig']->addFunction(new \Twig_SimpleFunction('path', function($url) use ($
     return $app['url_generator']->generate($url);
 }));
 
+// Init Mailer
 $app->register(new Pleasepay\Provider\PpSwiftmailerServiceProvider());
 
+// Init Translator
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale_fallbacks'  => array('en')
 ));
