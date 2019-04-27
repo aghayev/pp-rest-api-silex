@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Invoice</title>
+    {#<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">#}
+    {# Google fonts doesn't work for some reason, so I included OpenSans family as base64 encoded
+    fonts embeded into css: #}
+    <link rel="stylesheet" href="../css/open-sans-font-face.css">
+    <link rel="stylesheet" href="../css/style-invoice.css">
+</head>
+<body class="p-print">
+<div class="b-container b-invoice_print clearfix" id="main">
+    <div class="l-content">
+        <table border="0" width="100%" class="b-invoice_print-table">
+            <thead>
+            <tr>
+                <th>
+                    <header class="b-invoice_print-row m-header">
+                        <div class="b-invoice_print-header_left">
+                            <p class="b-invoice_print-header_title uppercase">this invoice was issue on</p>
+                            <p class="b-invoice_print-header_value m-date">{{ invoice.created|date('d/m/Y') }}</p>
+                            <span class="line m-left"></span>
+                        </div>
+                        <div class="b-invoice_print-header_right">
+                            <p class="b-invoice_print-header_title uppercase">please pay invoice on &#8470;</p>
+                            <p class="b-invoice_print-header_value m-invoice">{{ invoice.number }}</p>
+                            <span class="line m-right"></span>
+                        </div>
+                        <div class="b-invoice_print-center m-header">
+                            <p>please pay our invoice by</p>
+                            <p class="b-invoice_print-header_value" id="invoice_by">{{ invoice.due_date|date('d/m/Y') }}</p>
+                            <span class="line"></span>
+                        </div>
+                    </header>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>
+                    <div class="b-invoice_print-content">
+                        <div class="b-invoice_print-row clearfix">
+                            <div class="b-invoice_print-seller_details">
+                                <h3 class="b-invoice_print-title m-top_title">Invoice issued by:</h3>
+                                {# Seller logo should be first placed into temp dir. Or you can use data-url. #}
+                                <img src="../images/logo_pay.jpg" alt="logo" id="seller_logo">
+                                <div class="b-invoice_print-text">
+                                    <p>{{ seller.name }}</p>
+                                    <p>{{ seller.person_name }}</p>
+                                    <p>{{ seller.address_line_1 }}</p>
+                                    {% if seller.address_line_2 is defined and  seller.address_line_2|length > 0 %}
+                                        <p>{{ seller.address_line_2 }}</p>
+                                    {% endif %}
+                                    {% if seller.address_line_3 is defined and  seller.address_line_3|length > 0 %}
+                                        <p>{{ seller.address_line_3 }}</p>
+                                    {% endif %}
+                                    <p>
+                                        <span>{{ seller.post_code }}</span>
+                                        <span>{{ seller.city }}</span>
+                                        <span>{{ seller.country }}</span>
+                                    </p>
+                                    <p>{{ seller.vat_label }}: {{ seller.vat_id }}</p>
+                                    <p>Company ID: {{ seller.company_id }}</p>
+                                </div>
+                            </div>
+                            <div class="b-invoice_print-customer_details">
+                                <h3 class="b-invoice_print-title m-top_title">Invoice is issued to:</h3>
+                                {# Buyer logo should be first placed into temp dir. Or you can use data-url. #}
+                                <img src="../images/fb765b8752d50de50cfa15203f9a7acd.png" alt="logo" id="customer_logo" class="b-invoice_print-logo">
+                                <div class="b-invoice_print-text">
+                                    <p>{{ buyer.name }}</p>
+                                    <p>{{ buyer.person_name }}</p>
+                                    <p>{{ buyer.address_line_1 }}</p>
+                                    {% if buyer.address_line_2 is defined and buyer.address_line_2|length > 0 %}
+                                        <p>{{ buyer.address_line_2 }}</p>
+                                    {% endif %}
+                                    {% if buyer.address_line_3 is defined and  buyer.address_line_3|length > 0 %}
+                                        <p>{{ buyer.address_line_3 }}</p>
+                                    {% endif %}
+                                    <p>
+                                        <span>{{ buyer.post_code }}</span>
+                                        <span>{{ buyer.city }}</span>
+                                        <span>{{ buyer.country }}</span>
+                                    </p>
+                                    <p>{{ buyer.vat_label }}: {{ buyer.vat_id }}</p>
+                                    <p>Company ID: {{ buyer.company_id }}</p>
+                                </div>
+                            </div>
+                            <div class="b-invoice_print-center m-title_inv uppercase">
+                                invoice
+                            </div>
+                        </div>
+                        <div class="b-invoice_print-row">
+                            <h3 class="b-invoice_print-title m-invoices_list">Please pay for the items below</h3>
+                            <div class="b-details-content">
+                                <table class="b-table" cellpadding="0" cellspacing="0" border="0">
+                                    <thead class="b-table-head">
+                                    <tr class="b-table-row">
+                                        <th class="b-table-cell m-item_id">Product ID</th>
+                                        <th class="b-table-cell m-items">items</th>
+                                        <th class="b-table-cell m-qty">quantity</th>
+                                        <th class="b-table-cell m-price">net price</th>
+                                        <th class="b-table-cell m-inv_amount">amount</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="b-table-body" id="products_list">
+
+                                    {% for product in products %}
+                                    <tr class="b-table-row">
+                                        <td class="b-table-cell m-id">{{ product.id }}</td>
+                                        <td class="b-table-cell m-items">{{ product.description }}</td>
+                                        <td class="b-table-cell m-qty">{{ product.quantity }}</td>
+                                        <td class="b-table-cell m-price">{{ product.price|number_format(2, ',', ' ') }}, {{ invoice.currency }}</td>
+                                        <td class="b-table-cell m-inv_amount">{{ product.final_price|number_format(2, ',', ' ') }} {{ invoice.currency }}</td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                                <div class="b-details-total_wrapper">
+                                    <div class="b-details-total_row">
+                                        <label for="buyer_vat_select" class="f-label b-details-t_title m-t_vat">prepayment value:</label>
+                                        <div class="b-details-value m-v_prepayment">
+                                            {{ summary.prepayment_value }}%
+                                        </div>
+                                    </div>
+                                    <div class="b-details-total_row">
+                                        <span class="b-details-t_title m-t_subtotal" id="subtotal">subtotal:</span>
+                                        <span class="b-details-value m-v_subtotal">{{ summary.subtotal|number_format(2, ',', ' ') }}{{ invoice.currency }}</span>
+                                    </div>
+                                    <div class="b-details-total_row">
+                                        <label for="buyer_vat_select" class="f-label b-details-t_title m-t_vat">vat value:</label>
+                                        <div class="b-details-value m-v_vat">
+                                            {{ summary.vat_value }}%
+                                        </div>
+                                    </div>
+                                    <div class="b-details-total_row">
+                                        <span class="b-details-t_title m-t_total">total:</span>
+                                        <span class="b-details-value m-v_total">{{ summary.total|number_format(2, ',', ' ') }}{{ invoice.currency }}</span>
+                                    </div>
+                                    <div class="b-details-total_row">
+                                        <span class="b-details-t_title m-to_be_prepaid_label">To be prepaid</span>
+                                        <span class="b-details-value m-to_be_prepaid_value">{{ summary.to_be_prepaid|number_format(2, ',', ' ') }}{{ invoice.currency }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="b-invoice_print-bottom_msg">Thank you for paying on time!</p>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td>
+                    <footer class="b-invoice_print-row m-footer clearfix">
+                        <h3 class="b-invoice_print-title m-footer">Banking details</h3>
+                        <div class="b-invoice_print-banking_details">
+                            <div class="f-field b-invoice_print-iban">
+                                <label for="note" class="f-label">Iban</label>
+                                <div class="b-invoice_print-text">{{ banking_details.iban }}</div>
+                            </div>
+                            <div class="f-field b-invoice_print-swift">
+                                <label for="note" class="f-label">swift</label>
+                                <div class="b-invoice_print-text">{{ banking_details.swift }}</div>
+                            </div>
+                            <div class="f-field b-invoice_print-account">
+                                <label for="note" class="f-label">account</label>
+                                <div class="b-invoice_print-text">{{ banking_details.account }}</div>
+                            </div>
+                            <div class="f-field b-invoice_print-sort_code">
+                                <label for="note" class="f-label">sort code</label>
+                                <div class="b-invoice_print-text">
+                                    {% for sort_code_item in banking_details.sort_code %}
+                                        {{ sort_code_item }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-invoice_print-notes">
+                            <label class="f-label">Note to Recipient</label>
+                            <span class="b-invoice_print-notes_text">
+                                {{ banking_details.note_to_recipient|default('') }}
+                            </span>
+                        </div>
+
+                        <div class="b-invoice_print-generate_inv">
+                            <span class="line"></span>
+                            <p class="b-invoice_print-generate_inv_text">this invoice was generated through pleasepay.co.uk</p>
+                            <img src="../images/logo_pay.jpg" alt="bottom logo" class="b-invoice_print-generate_inv_img">
+                        </div>
+                    </footer>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+</body>
+</html>

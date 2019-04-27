@@ -1,0 +1,31 @@
+
+    Dear {{ customer_name }},
+
+
+    Dear {{ customer_name }}, you have received an invoice from
+    {{ seller_name }}.
+
+    The invoice is attached in this email and you can also download it by following
+    this {{ link }}.
+
+    Pleasepay.co.uk is a free invoicing service, your details are stored under your
+    email {{ email }}, and you are welcome to use the service for your invoicing
+    needs, simply follow this link {{ link }},
+
+    Enter your email address
+
+    Enter your password {{ password }} to start using the service.
+
+    All your future incoming invoices will be stored in your account space.
+
+    We thank you for using our service, and we welcome any suggestions that you
+    may have, to make the system even better.
+
+    Need support? Just email us at helpme@pleasepay.co.uk
+
+
+    PleasePay Ltd
+    www.pleasepay.co.uk
+    6 Montrose Place
+    SW1X 7DU London
+    United Kingdom

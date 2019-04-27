@@ -1,0 +1,24 @@
+
+    Dear {{ seller_name }},
+
+
+    thank you for using PleasePay, we have created an account and your credentials are:
+    Login: {{ email }}
+    Password: {{ password }}
+    Please confirm your email by following this {{ link }}.
+
+    We have also stored your invoice in your account. In the future, all your invoices and incoming bills
+    from other users, will be stored in your account, where you can access them at any time.
+
+    We are constantly updating our system with new features. Our goal is - to make invoicing easier for
+    everyone.
+
+    We thank you for using our service, and we welcome any suggestions that you may have, to make the system even better.
+    Need support? Just email us at helpme@pleasepay.co.uk
+
+
+    PleasePay Ltd
+    www.pleasepay.co.uk
+    6 Montrose Place
+    SW1X 7DU London
+    United Kingdom
