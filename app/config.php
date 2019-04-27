@@ -3,7 +3,7 @@
 // Please set to false in a production environment
 $app['debug'] = true;
 
-$app['base_url'] = 'https://www.pleasepay.co.uk/';
+$app['base_url'] = 'https://pp-api.aghayev.com/';
 $app['mysql_token_timeout'] = '-1';
 
 // pp-api/console based local version 0.9.9 statically linked - no Bold font not generated
