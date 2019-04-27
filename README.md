@@ -11,29 +11,29 @@ Services
 
 - GET  /1.0/buyer [Header: Client-Security-Token]
 - GET  /1.0/buyer/{id}
-POST /1.0/buyer
+- POST /1.0/buyer
 
-GET  /1.0/country
-GET  /1.0/currency
+- GET  /1.0/country
+- GET  /1.0/currency
 
-GET  /1.0/dashboard 
+- GET  /1.0/dashboard 
 
-GET  /1.0/seller/welcome/{to}
-POST /1.0/seller
+- GET  /1.0/seller/welcome/{to}
+- POST /1.0/seller
 
-GET  /1.0/invoice
-GET  /1.0/invoice/{id}
-POST /1.0/invoice
+- GET  /1.0/invoice
+- GET  /1.0/invoice/{id}
+- POST /1.0/invoice
 
-GET  /1.0/invoice_print
-POST /1.0/invoice_product
+- GET  /1.0/invoice_print
+- POST /1.0/invoice_product
 
-POST /1.0/logo
+- POST /1.0/logo
 
-GET  /1.0/product/{name}
+- GET  /1.0/product/{name}
 
-POST /1.0/update/seller
-GET  /1.0/vat
+- POST /1.0/update/seller
+- GET  /1.0/vat
 
 
 Installation
