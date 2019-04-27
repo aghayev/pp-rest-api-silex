@@ -11,7 +11,7 @@ require_once __DIR__.'/config.php';
 // Init log connector
 $app->register(new Silex\Provider\MonologServiceProvider(), array());
 
-// Init Database connector for Model component
+// Init Database connector
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'driver' => 'pdo_mysql',
